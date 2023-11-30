@@ -154,3 +154,5 @@ sftp-config.json
 
 # IntelliJ IDEA - https://www.jetbrains.com/idea/
 .idea
+
+data

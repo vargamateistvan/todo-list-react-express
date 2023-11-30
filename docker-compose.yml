@@ -1,0 +1,37 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+
+  server:
+    container_name: server
+    build: ./server
+    volumes:
+      - .:/usr/src/app/server
+      - /usr/src/app/server/node_modules
+    ports:
+      - "8080:8080"
+    environment:
+      HOST: 0.0.0.0
+    depends_on:
+      - mongo
+
+  client:
+    container_name: client
+    build: ./client
+    volumes:
+      - .:/usr/src/app/client
+      - /usr/src/app/client/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+
+volumes:
+  mongodb:
+  node_modules:
