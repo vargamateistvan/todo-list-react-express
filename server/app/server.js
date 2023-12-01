@@ -2,12 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const history = require("connect-history-api-fallback");
+const cors = require("cors");
+
+const connectMongodb = require("./connect-database");
 
 module.exports = (host, port) => {
-  const app = express();
+  // Routes
+  const todo = require("./routes/todos");
 
+  // Create express instance
+  const app = express();
   const router = new express.Router();
-  app.use("/", router);
 
   // Router config
   router.use(
@@ -15,51 +20,26 @@ module.exports = (host, port) => {
     bodyParser.json() // Parse application/json
   );
 
-  /**
-   * Az osszes todo lekerdezese
-   *
-   */
-  router.get("/api/todos", function (req, res) {
-    //TODO: modositsd a fuggvenyt a feladat kiirasnak megfeleloen
-    let todos = [];
-    res.status(200).json(todos);
-  });
+  // Require Todo routes
+  app.use(todo);
 
-  /**
-   * Todo lekerdezese id alapjan
-   */
-  router.get("/api/todos/:todoId", function (req, res) {
-    //TODO: modositsd a fuggvenyt a feladat kiirasnak megfeleloen
-    let todo = {};
-    res.status(200).json(todo);
-  });
+  // app.use((req, res, next) => {
+  //   res.setHeader("Access-Control-Allow-Origin", "*");
+  //   res.header(
+  //     "Access-Control-Allow-Headers",
+  //     "Origin, X-Requested-With, Content-Type, Accept"
+  //   );
+  //   next();
+  // });
 
-  /**
-   * Todo letrehozasa
-   */
-  router.post("/api/todos/:todoId", function (req, res) {
-    //TODO: modositsd a fuggvenyt a feladat kiirasnak megfeleloen
-    let todo = {};
-    res.status(201).json(todo);
-  });
+  // Use CORS
+  // const corsOptions = {
+  //   origin: "*",
+  // };
 
-  /**
-   * Todo modositasa
-   */
-  router.patch("/api/todos/:todoId", function (req, res) {
-    //TODO: modositsd a fuggvenyt a feladat kiirasnak megfeleloen
-    let todo = {};
-    res.status(200).json(todo);
-  });
+  // app.use(cors(corsOptions));
 
-  /**
-   * Todo torlese
-   */
-  router.delete("/api/todos/:todoId", function (req, res) {
-    //TODO: modositsd a fuggvenyt a feladat kiirasnak megfeleloen
-    let todo = {};
-    res.status(202).json(todo);
-  });
+  connectMongodb();
 
   // History fallback api
   router.use(history());

@@ -1,0 +1,115 @@
+{
+  "info": {
+    "_postman_id": "c5a9e04a-d2ee-48c8-a214-84c9ca542dac",
+    "name": "IdomSoft test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3766722"
+  },
+  "item": [
+    {
+      "name": "Create Todo",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "name",
+              "value": "test todo",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus nec augue id bibendum. Sed elementum quam nisi, nec efficitur est dictum eget. Mauris vel quam vitae lectus consequat ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim sem eget purus mattis, vel pretium augue commodo. Integer ullamcorper posuere quam, vel ultrices odio tristique et. Aenean ut lectus a urna sagittis viverra at non augue. Nunc sed nunc ut elit gravida egestas at eu urna. Nullam non euismod lacus, sit amet elementum eros.",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/todos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "todos"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all todo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/todos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "todos"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Patch todo",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "name",
+              "value": "modified name",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "asd asd asd",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/todos/6568a942320bf6e264ec7614",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "todos", "6568a942320bf6e264ec7614"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get todo by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/todos/6568a942320bf6e264ec7614",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "todos", "6568a942320bf6e264ec7614"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete request",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/todos/656889049376f89872fbb1c8",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "todos", "656889049376f89872fbb1c8"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
