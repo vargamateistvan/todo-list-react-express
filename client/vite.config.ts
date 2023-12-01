@@ -7,13 +7,16 @@ export default defineConfig({
   server: {
     host: true,
     port: 3000, // This is the port which we will use in docker
-    // Thanks @sergiomoura for the window fix
-    // add the next lines if you're using windows and hot reload doesn't work
     watch: {
       usePolling: true,
     },
-  },
-  chokidarWatchOptions: {
-    usePolling: true,
+    proxy: {
+      "/api": {
+        target: "http://varga-mate-istvan-server:8080",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 });

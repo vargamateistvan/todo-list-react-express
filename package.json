@@ -11,5 +11,8 @@
     "npm": ">=8"
   },
   "author": "IdomSoft Zrt. <hr@idomsoft.hu>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@carbon/react": "^1.42.1"
+  }
 }
