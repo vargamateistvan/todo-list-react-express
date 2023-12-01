@@ -14,30 +14,19 @@ module.exports = (host, port) => {
   const app = express();
   const router = new express.Router();
 
+  // Use CORS
+  const corsOptions = {
+    origin: "*",
+  };
+
+  app.use(cors(corsOptions));
+
   // Router config
-  router.use(
-    bodyParser.urlencoded({ extended: true }), // Parse application/x-www-form-urlencoded
-    bodyParser.json() // Parse application/json
-  );
+  app.use(bodyParser.urlencoded({ extended: true })); // Parse application/x-www-form-urlencoded
+  app.use(bodyParser.json()); // Parse application/json
 
   // Require Todo routes
   app.use(todo);
-
-  // app.use((req, res, next) => {
-  //   res.setHeader("Access-Control-Allow-Origin", "*");
-  //   res.header(
-  //     "Access-Control-Allow-Headers",
-  //     "Origin, X-Requested-With, Content-Type, Accept"
-  //   );
-  //   next();
-  // });
-
-  // Use CORS
-  // const corsOptions = {
-  //   origin: "*",
-  // };
-
-  // app.use(cors(corsOptions));
 
   connectMongodb();
 

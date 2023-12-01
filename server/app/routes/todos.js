@@ -60,11 +60,11 @@ router.post("/api/todos", async (req, res) => {
  */
 router.patch("/api/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
-  const { name, description } = req.body;
+  const { name, description, completed } = req.body;
 
   const todo = await TodoModel.updateOne(
     { _id: todoId },
-    { name, description }
+    { name, description, closedAt: completed ? new Date() : null }
   );
 
   return res.status(200).json({
