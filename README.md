@@ -1,18 +1,26 @@
 ## Telepítés
 
-Az általad választott megvalósítás alapján töltsd ki!
+```
+npm install
+```
 
 ## Futtatás
 
-Az általad választott megvalósítás alapján töltsd ki!
+Docker telepítes kell hozzá
+
+```
+docker-compose up
+```
 
 ## Feladat leírása
 
 ### Full-stack pozíció esetén
+
 A feladat egy **Todo list** alkalmazás elkészítése a [Carbon Component](https://carbondesignsystem.com/) használatával egy általa [támogatott keretrendszer ](https://carbondesignsystem.com/developing/frameworks/react)segítségével.
 
 ### Front-end pozíció esetén
-A feladat egy **Todo list** alkalmazás elkészítése [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) használatával natívan vagy Lit/Stencil keretrendszerek használatával. A UI kialakítása során ne használj semmilyen CSS keretrendszert, egyébként a kinézet rád van bízva. Ügyelj kérlek az akadálymentesítési alapelvekre is a WCAG 2.2-es szabvány alapján. 
+
+A feladat egy **Todo list** alkalmazás elkészítése [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) használatával natívan vagy Lit/Stencil keretrendszerek használatával. A UI kialakítása során ne használj semmilyen CSS keretrendszert, egyébként a kinézet rád van bízva. Ügyelj kérlek az akadálymentesítési alapelvekre is a WCAG 2.2-es szabvány alapján.
 
 - Az alkalmazás a gyökér könyvtárból futtatható kell legyen
 - A README.md file-ba töltsd ki a **Telepítés** és **Futtatás** részeit!
