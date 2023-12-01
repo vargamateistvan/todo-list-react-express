@@ -17,8 +17,6 @@ const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
   const [todo, setTodo] = useState<TodoType>({ name: "", description: "" });
 
   const createTodo = async () => {
-    console.log("CCCC todo", todo);
-
     const response = await fetch(`${apiURL}/todos`, {
       method: "POST",
       headers: {
@@ -27,9 +25,9 @@ const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
       body: JSON.stringify(todo),
     });
     const createdTodo = await response.json();
+    console.log(createdTodo);
     onCreate(createdTodo);
     onClose();
-    console.log(createdTodo);
   };
 
   return (

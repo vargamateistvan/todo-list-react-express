@@ -45,12 +45,9 @@ const TodoList: React.FC<TodoListProps> = () => {
 
   useEffect(() => {
     getTodos();
-    console.log("getTodos", todos);
   }, []);
 
   const createTodo = async () => {
-    console.log("CCCC todo", todo);
-
     const response = await fetch(`${apiURL}/todos`, {
       method: "POST",
       headers: {
@@ -58,8 +55,7 @@ const TodoList: React.FC<TodoListProps> = () => {
       },
       body: JSON.stringify(todo),
     });
-    const createdTodo = await response.json();
-    console.log(createdTodo);
+    const createdTodod = await response.json();
   };
 
   return (

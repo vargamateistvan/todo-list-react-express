@@ -44,12 +44,10 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo, refreshList }) => {
   const handleClosedCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log("event.target.value", event.target.checked);
     setCompletedTodo(event.target.checked);
   };
 
   const editTodo = async () => {
-    console.log("editedTodo", editedTodo);
     const todo = {
       ...editedTodo,
       completed: completedTodo,
