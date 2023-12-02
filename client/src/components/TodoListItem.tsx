@@ -7,9 +7,10 @@ import {
   IconButton,
   TextArea,
 } from "@carbon/react";
-import { Checkmark, Close, Edit, TrashCan } from "@carbon/icons-react";
+import { Edit, TrashCan } from "@carbon/icons-react";
 import { TodoType } from "../state/types";
 import { apiURL } from "./TodoList";
+import DeleteTodoModal from "./modals/DeleteTodoModal";
 
 interface TodoListItemProps {
   todo: TodoType;
@@ -20,9 +21,10 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo, refreshList }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTodo, setEditedTodo] = useState(todo);
   const [completedTodo, setCompletedTodo] = useState(!!todo.closedAt);
+  const [openDeleteTodoModal, setOpenDeleteTodoModal] = useState(false);
 
   const handleEdit = () => {
-    setIsEditing(true);
+    setIsEditing(!isEditing);
   };
 
   const handleCancel = () => {
@@ -65,19 +67,37 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo, refreshList }) => {
     setIsEditing(false);
   };
 
-  const deleteTodo = async () => {
-    const response = await fetch(`${apiURL}/todos/${editedTodo._id}`, {
-      method: "DELETE",
-    });
-    const deletedTodo = await response.json();
-    console.log(deletedTodo);
-    refreshList();
-  };
-
   return (
-    <ContainedListItem>
+    <ContainedListItem
+      className="todo-list-item"
+      action={
+        isEditing ? (
+          <></>
+        ) : (
+          <div className="todo-list-item-action-buttons">
+            <IconButton kind="tertiary" label="Edit" onClick={handleEdit}>
+              <Edit />
+            </IconButton>
+            <IconButton
+              kind="danger--tertiary"
+              label="Delete"
+              onClick={() => setOpenDeleteTodoModal(true)}
+            >
+              <TrashCan />
+            </IconButton>
+
+            <DeleteTodoModal
+              isOpen={openDeleteTodoModal}
+              onClose={() => setOpenDeleteTodoModal(false)}
+              onCreate={refreshList}
+              todoId={todo._id}
+            ></DeleteTodoModal>
+          </div>
+        )
+      }
+    >
       {isEditing ? (
-        <div>
+        <div className="todo-list-item-content">
           <TextInput
             id={`todo-name-${todo._id}`}
             labelText="Name"
@@ -97,33 +117,25 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo, refreshList }) => {
             onChange={handleClosedCheckboxChange}
             disabled={!isEditing}
           />
+          <div className="todo-list-item-edit-button">
+            <Button kind="tertiary" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button onClick={editTodo}>Save</Button>
+          </div>
         </div>
       ) : (
-        <div>
+        <div className="todo-list-item-content">
           Name: {todo.name} <br />
           Description: {todo.description} <br />
-          Completed:{" "}
-          {completedTodo ? (
-            <Checkmark color="success" />
+          Created at: {new Date(todo.createdAt).toLocaleString("hu-HU")} <br />
+          {completedTodo && todo.closedAt ? (
+            `Completed at: ${new Date(todo.closedAt).toLocaleString("hu-HU")}`
           ) : (
-            <Close color="danger" />
+            <></>
           )}
         </div>
       )}
-
-      {isEditing ? (
-        <>
-          <Button onClick={editTodo}>Save</Button>
-          <Button onClick={handleCancel}>Cancel</Button>
-        </>
-      ) : (
-        <IconButton kind="primary" label="Edit" onClick={handleEdit}>
-          <Edit />
-        </IconButton>
-      )}
-      <IconButton kind="tertiary" label="Delete" onClick={deleteTodo}>
-        <TrashCan />
-      </IconButton>
     </ContainedListItem>
   );
 };

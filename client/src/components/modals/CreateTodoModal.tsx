@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Modal, TextInput, TextArea } from "@carbon/react";
-import { TodoType } from "../state/types";
-import { apiURL } from "./TodoList";
+import { apiURL } from "../TodoList";
 
 interface CreateTodoModalProps {
   isOpen: boolean;
@@ -9,12 +8,20 @@ interface CreateTodoModalProps {
   onCreate: (todo: string) => void;
 }
 
+type Todo = {
+  name: string;
+  description: string;
+};
+
 const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
   isOpen,
   onClose,
   onCreate,
 }) => {
-  const [todo, setTodo] = useState<TodoType>({ name: "", description: "" });
+  const [todo, setTodo] = useState<Todo | null>({
+    name: "",
+    description: "",
+  });
 
   const createTodo = async () => {
     const response = await fetch(`${apiURL}/todos`, {
@@ -26,6 +33,10 @@ const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
     });
     const createdTodo = await response.json();
     console.log(createdTodo);
+    setTodo({
+      name: "",
+      description: "",
+    });
     onCreate(createdTodo);
     onClose();
   };
@@ -42,15 +53,15 @@ const CreateTodoModal: React.FC<CreateTodoModalProps> = ({
     >
       <TextInput
         id="todo-input"
-        labelText="Todo"
-        value={todo.name}
+        labelText="Todo Name"
+        value={todo?.name}
         required={true}
         onChange={(e) => setTodo({ ...todo, name: e.target.value })}
       />
       <TextArea
         id="todo-input"
-        labelText="Todo"
-        value={todo.description}
+        labelText="Todo Description"
+        value={todo?.description}
         required={true}
         onChange={(e) => setTodo({ ...todo, description: e.target.value })}
       />
