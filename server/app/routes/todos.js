@@ -22,6 +22,8 @@ router.get("/api/todos", async (req, res) => {
  */
 router.get("/api/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
+  if (!todoId) return res.status(400).json({ error: "Missing todoId" });
+
   const todos = await TodoModel.find({ _id: todoId });
 
   return res.status(200).json({
@@ -37,6 +39,8 @@ router.get("/api/todos/:todoId", async (req, res) => {
  */
 router.post("/api/todos", async (req, res) => {
   const { name, description } = req.body;
+  if (!name || !description)
+    return res.status(400).json({ error: "Missing name or description" });
 
   const todo = new TodoModel({
     name,
@@ -61,6 +65,9 @@ router.post("/api/todos", async (req, res) => {
 router.patch("/api/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
   const { name, description, completed } = req.body;
+  if (!todoId) return res.status(400).json({ error: "Missing todoId" });
+  if (!name || !description)
+    return res.status(400).json({ error: "Missing name or description" });
 
   const todo = await TodoModel.updateOne(
     { _id: todoId },
@@ -80,6 +87,8 @@ router.patch("/api/todos/:todoId", async (req, res) => {
  */
 router.delete("/api/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
+  if (!todoId) return res.status(400).json({ error: "Missing todoId" });
+
   const todo = await TodoModel.deleteOne({ _id: todoId });
 
   res.status(202).json({
