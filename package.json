@@ -4,7 +4,8 @@
   "description": "IdomSoft teszt feladat",
   "scripts": {
     "preinstall": "cd client && npm i && cd ../server && npm i && cd ..",
-    "start": "node server"
+    "start": "node server",
+    "test": "jest"
   },
   "engines": {
     "node": ">=18",
@@ -14,5 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "@carbon/react": "^1.42.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
   }
 }

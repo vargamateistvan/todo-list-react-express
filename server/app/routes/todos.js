@@ -51,7 +51,7 @@ router.post("/api/todos", async (req, res) => {
 
   const savedTodo = await todo.save();
 
-  return res.status(200).json({
+  return res.status(201).json({
     data: savedTodo,
     success: true,
     status: 200,

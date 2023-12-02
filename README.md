@@ -12,6 +12,12 @@ Docker telepítes kell hozzá
 docker-compose up
 ```
 
+## Tesztelés
+
+```
+npm run test
+```
+
 ## Feladat leírása
 
 ### Full-stack pozíció esetén
