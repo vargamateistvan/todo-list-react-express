@@ -11,6 +11,9 @@ import { Edit, TrashCan } from "@carbon/icons-react";
 import { TodoType } from "../state/types";
 import { apiURL } from "./TodoList";
 import DeleteTodoModal from "./modals/DeleteTodoModal";
+import Title from "../containers/typography/Title";
+import SubTitle from "../containers/typography/SubTitle";
+import Content from "../containers/typography/Content";
 
 interface TodoListItemProps {
   todo: TodoType;
@@ -126,11 +129,18 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo, refreshList }) => {
         </div>
       ) : (
         <div className="todo-list-item-content">
-          Name: {todo.name} <br />
-          Description: {todo.description} <br />
-          Created at: {new Date(todo.createdAt).toLocaleString("hu-HU")} <br />
+          <Title>Name: {todo.name}</Title>
+          <SubTitle>Description: </SubTitle>
+          <Content>{todo.description}</Content>
+          <SubTitle>Created at:</SubTitle>
+          <Content>{new Date(todo.createdAt).toLocaleString("hu-HU")}</Content>
           {completedTodo && todo.closedAt ? (
-            `Completed at: ${new Date(todo.closedAt).toLocaleString("hu-HU")}`
+            <>
+              <SubTitle>Completed at:</SubTitle>
+              <Content>
+                {new Date(todo.closedAt).toLocaleString("hu-HU")}
+              </Content>
+            </>
           ) : (
             <></>
           )}

@@ -15,6 +15,12 @@ const TodoListContainer = styled(ContainedList)`
     margin-top: 25px;
   }
 
+  .todo-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 90vh;
+  }
+
   .todo-list-item-content {
     width: 800px;
   }

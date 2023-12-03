@@ -7,6 +7,7 @@ import { Button } from "@carbon/react";
 import TodoListItem from "./TodoListItem";
 import CreateTodoModal from "./modals/CreateTodoModal";
 import TodoListContainer from "../containers/TodoListContainer";
+import Title from "../containers/typography/Title";
 
 export const apiURL = "http://localhost:8080/api";
 
@@ -47,17 +48,19 @@ const TodoList: React.FC<TodoListProps> = () => {
               justifyContent: "space-between",
             }}
           >
-            <span>Todo list</span>
+            <Title>Todo list</Title>
             <Button onClick={() => setOpenTodoModal(true)}>Create Todo</Button>
           </div>
         }
         kind="on-page"
       >
-        {todos?.map((todo: TodoType) => {
-          return (
-            <TodoListItem todo={todo} key={todo._id} refreshList={getTodos} />
-          );
-        })}
+        <div className="todo-list">
+          {todos?.map((todo: TodoType) => {
+            return (
+              <TodoListItem todo={todo} key={todo._id} refreshList={getTodos} />
+            );
+          })}
+        </div>
       </TodoListContainer>
     </>
   );
