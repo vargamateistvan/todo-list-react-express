@@ -24,14 +24,21 @@ router.get("/api/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
   if (!todoId) return res.status(400).json({ error: "Missing todoId" });
 
-  const todos = await TodoModel.find({ _id: todoId });
+  try {
+    const todo = await TodoModel.findById(todoId);
+    if (!todo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
 
-  return res.status(200).json({
-    data: todos,
-    success: true,
-    status: 200,
-    error: null,
-  });
+    return res.status(200).json({
+      data: todo,
+      success: true,
+      status: 200,
+      error: null,
+    });
+  } catch (error) {
+    return res.status(500).json({ error, message: "Internal server error" });
+  }
 });
 
 /**
@@ -49,14 +56,18 @@ router.post("/api/todos", async (req, res) => {
     closedAt: null,
   });
 
-  const savedTodo = await todo.save();
+  try {
+    const savedTodo = await todo.save();
 
-  return res.status(201).json({
-    data: savedTodo,
-    success: true,
-    status: 200,
-    error: null,
-  });
+    return res.status(201).json({
+      data: savedTodo,
+      success: true,
+      status: 200,
+      error: null,
+    });
+  } catch (error) {
+    return res.status(500).json({ error, message: "Internal server error" });
+  }
 });
 
 /**
@@ -69,17 +80,26 @@ router.patch("/api/todos/:todoId", async (req, res) => {
   if (!name || !description)
     return res.status(400).json({ error: "Missing name or description" });
 
-  const todo = await TodoModel.updateOne(
-    { _id: todoId },
-    { name, description, closedAt: completed ? new Date() : null }
-  );
+  try {
+    const todo = await TodoModel.findOneAndUpdate(
+      { _id: todoId },
+      { name, description, closedAt: completed ? new Date() : null },
+      { new: true }
+    );
 
-  return res.status(200).json({
-    data: todo,
-    success: true,
-    status: 200,
-    error: null,
-  });
+    if (!todo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    return res.status(200).json({
+      data: todo,
+      success: true,
+      status: 200,
+      error: null,
+    });
+  } catch (error) {
+    return res.status(500).json({ error, message: "Internal server error" });
+  }
 });
 
 /**
@@ -89,14 +109,22 @@ router.delete("/api/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
   if (!todoId) return res.status(400).json({ error: "Missing todoId" });
 
-  const todo = await TodoModel.deleteOne({ _id: todoId });
+  try {
+    const todo = await TodoModel.findOneAndDelete({ _id: todoId });
 
-  res.status(202).json({
-    data: todo,
-    success: true,
-    status: 200,
-    error: null,
-  });
+    if (!todo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.status(202).json({
+      data: todo,
+      success: true,
+      status: 200,
+      error: null,
+    });
+  } catch (error) {
+    return res.status(500).json({ error, message: "Internal server error" });
+  }
 });
 
 module.exports = router;
