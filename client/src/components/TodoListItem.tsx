@@ -78,7 +78,12 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ todo, refreshList }) => {
           <></>
         ) : (
           <div className="todo-list-item-action-buttons">
-            <IconButton kind="tertiary" label="Edit" onClick={handleEdit}>
+            <IconButton
+              kind="tertiary"
+              label="Edit"
+              disabled={!!todo.closedAt}
+              onClick={handleEdit}
+            >
               <Edit />
             </IconButton>
             <IconButton
