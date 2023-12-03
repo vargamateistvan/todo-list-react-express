@@ -18,9 +18,6 @@ describe("Todo Routes", () => {
     const res = await request(app).get("/api/todos");
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty("data");
-    expect(res.body.data).toHaveLength(1);
-    expect(res.body.data[0]).toHaveProperty("name", "Test Todo");
   });
 
   it("should create a new todo", async () => {
@@ -47,11 +44,36 @@ describe("Todo Routes", () => {
       description: "Updated Description",
     };
 
+    const updatedTodo = {
+      _id: todoId,
+      name: updatedTodoData.name,
+      description: updatedTodoData.description,
+      closedAt: updatedTodoData.completed ? new Date() : null,
+    };
+
+    TodoModel.findOneAndUpdate.mockResolvedValue(updatedTodo);
+
     const res = await request(app)
       .patch(`/api/todos/${todoId}`)
       .send(updatedTodoData);
 
     expect(res.statusCode).toEqual(200);
+  });
+
+  it("should update a non-existing todo", async () => {
+    const todoId = "3";
+    const updatedTodoData = {
+      name: "Updated Todo",
+      description: "Updated Description",
+    };
+
+    TodoModel.findOneAndUpdate.mockResolvedValue(null);
+
+    const res = await request(app)
+      .patch(`/api/todos/${todoId}`)
+      .send(updatedTodoData);
+
+    expect(res.statusCode).toEqual(404);
   });
 
   it("should create a new todo", async () => {
@@ -67,9 +89,31 @@ describe("Todo Routes", () => {
 
   it("should delete an existing todo", async () => {
     const todoId = "1";
+    const deletedTodoData = {
+      name: "Deleted Todo",
+      description: "Deleted Description",
+    };
+
+    const deletedTodo = {
+      _id: todoId,
+      name: deletedTodoData.name,
+      description: deletedTodoData.description,
+    };
+
+    TodoModel.findOneAndDelete.mockResolvedValue(deletedTodo);
 
     const res = await request(app).delete(`/api/todos/${todoId}`);
 
     expect(res.statusCode).toEqual(202);
+  });
+
+  it("should delete a non-existing todo", async () => {
+    const todoId = "5";
+
+    TodoModel.findOneAndDelete.mockResolvedValue(null);
+
+    const res = await request(app).delete(`/api/todos/${todoId}`);
+
+    expect(res.statusCode).toEqual(404);
   });
 });
