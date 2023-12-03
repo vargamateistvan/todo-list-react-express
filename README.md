@@ -6,7 +6,7 @@ npm install
 
 ## Futtatás
 
-Docker telepítes kell hozzá
+Docker telepítes kell hozzá, a futtatáshoz nem szükséges telepíteni a packageket
 
 ```
 docker-compose up
@@ -14,9 +14,19 @@ docker-compose up
 
 ## Tesztelés
 
+Tesztek futtatásához szükséges a csomagok telepítése
+
 ```
-npm run test
+npm run dev
 ```
+
+## környezet
+
+```
+node v20.10.0  npm 10.2.4
+```
+
+A backendhez tartozik egy postman collection is a postman mappában
 
 ## Feladat leírása
 
